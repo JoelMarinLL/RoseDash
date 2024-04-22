@@ -22,7 +22,7 @@ public class CheckEnd : MonoBehaviour
         {
             if(other.TryGetComponent(out PlayerMovement playerMovement))
             {
-                playerMovement.DisableInputMovement();
+                playerMovement.ArriveCheckPoint();
             }
         }
     }
