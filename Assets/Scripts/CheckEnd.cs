@@ -25,9 +25,5 @@ public class CheckEnd : MonoBehaviour
                 playerMovement.DisableInputMovement();
             }
         }
-        if (other.gameObject.CompareTag("End"))
-        {
-            
-        }
     }
 }

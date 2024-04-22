@@ -22,7 +22,6 @@ public class ScoreManager : MonoBehaviour
     {
         score = Mathf.Clamp(value, 0, int.MaxValue);
         ScalePlayer();
-        if (score == 0) GameManager.Instance.Lose();
     }
 
     void ScalePlayer()

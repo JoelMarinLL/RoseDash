@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _speed = 0.1f;
+    [SerializeField] private float _speed = 0.01f;
     [SerializeField] InputActionAsset _moveAction;
     InputAction _moveMap;
     float movement;
@@ -23,15 +23,26 @@ public class PlayerMovement : MonoBehaviour
         getInput();
         _rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
         //transform.Translate(movement * _speed, 0, 0);
-        Debug.Log(movement);
     }
 
     void getInput()
     {
         movement = _moveMap.ReadValue<float>();
     }
+    public void ArriveCheckPoint()
+    {
+        DisableInputMovement();
+        StartCoroutine(FinalRun());
+    }
 
-    public void DisableInputMovement()
+    IEnumerator FinalRun()
+    {
+
+        yield return new WaitForSecondsRealtime(GetComponent<ScoreManager>().GetRunningSeconds());
+        GameManager.Instance.End();
+    }
+
+    private void DisableInputMovement()
     {
         _moveMap.Disable();
     }

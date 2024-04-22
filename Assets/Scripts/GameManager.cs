@@ -8,12 +8,7 @@ public class GameManager : MonoBehaviour
 
     void Awake() => Instance = this;
 
-    public void Win()
-    {
-
-    }
-
-    public void Lose()
+    public void End()
     {
 
     }
