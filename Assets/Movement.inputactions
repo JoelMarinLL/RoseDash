@@ -1,0 +1,45 @@
+{
+    "name": "Movement",
+    "maps": [
+        {
+            "name": "PlayerMovement",
+            "id": "d3aee990-6227-408f-a01e-17b0fe2b392f",
+            "actions": [
+                {
+                    "name": "HorizontalMovement",
+                    "type": "Value",
+                    "id": "a6bb8a91-53a7-4a1e-9b06-b05e12babe21",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "060a9ca7-cb84-4626-8922-00b7311631af",
+                    "path": "<Keyboard>/a",
+                    "interactions": "Press",
+                    "processors": "Scale(factor=-1)",
+                    "groups": "",
+                    "action": "HorizontalMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0237e6c-0d64-4ea8-90c4-9878d3c1dfb9",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Press",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "HorizontalMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
