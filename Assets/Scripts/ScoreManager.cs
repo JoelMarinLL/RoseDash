@@ -1,18 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] int scorePerScaleUnit;
+    [SerializeField] float scoreBurnedPerSecond;
+    int score = 0;
+
     void Start()
     {
-        
+        if (scoreBurnedPerSecond <= 0f) scoreBurnedPerSecond = 1f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int GetScore() => score;
+
+    public float GetRunningSeconds() => score / scoreBurnedPerSecond;
+
+    void SetScore(int value)
     {
-        
+        score = Mathf.Clamp(value, 0, int.MaxValue);
+        ScalePlayer();
+        if (score == 0) GameManager.Instance.Lose();
+    }
+
+    void ScalePlayer()
+    {
+        if (score == 0) transform.localScale = Vector3.one;
+        else
+        {
+            float scale = 1 + (score / scorePerScaleUnit);
+            transform.localScale = Vector3.one * scale;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject.CompareTag("Obstacle"))
+        {
+            var obstacle = other.gameObject.GetComponent<Obstacle>();
+            int newScore = obstacle.GetResult(score);
+            SetScore(newScore);
+        }
     }
 }
