@@ -43,10 +43,5 @@ public class ScoreManager : MonoBehaviour
             int newScore = obstacle.GetResult(score);
             SetScore(newScore);
         }
-        else if (!other.gameObject.CompareTag("End"))
-        {
-            GameManager.Instance.StartFinalRun();
-            //gameObject.GetComponent<PlayerMovement>().StartFinalRun();
-        }
     }
 }
