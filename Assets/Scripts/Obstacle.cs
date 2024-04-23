@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
@@ -13,6 +14,19 @@ public class Obstacle : MonoBehaviour
     void Start()
     {
         if (randomValue) value = Random.Range(randomMinValue, randomMaxValue);
+        GetComponentInChildren<TMP_Text>().text = GetOperationString();
+    }
+
+    string GetOperationString()
+    {
+        return operatorType switch
+        {
+            Operator.ADD => $"+{value}",
+            Operator.SUBTRACT => $"-{value}",
+            Operator.MULTIPLY => $"x{value}",
+            Operator.DIVIDE => $"÷{value}",
+            _ => $"{value}",
+        };
     }
 
     public int GetResult(int startValue)
@@ -26,5 +40,10 @@ public class Obstacle : MonoBehaviour
             Operator.DIVIDE => startValue / value,
             _ => startValue,
         };
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player")) Destroy(gameObject);
     }
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 0.01f;
     [SerializeField] InputActionAsset _moveAction;
     InputAction _moveMap;
     float movement;
+    bool hasEnded = false;
     Rigidbody _rb;
 
     void Awake()
@@ -17,12 +19,10 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update() // ¡CAN MOVE PAST WALLS!
     {
         getInput();
-        _rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
-        //transform.Translate(movement * _speed, 0, 0);
+        if (!hasEnded) _rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
     }
 
     void getInput()
@@ -39,7 +39,9 @@ public class PlayerMovement : MonoBehaviour
     {
 
         yield return new WaitForSecondsRealtime(GetComponent<ScoreManager>().GetRunningSeconds());
-        GameManager.Instance.End();
+        hasEnded = true;
+        int score = Mathf.RoundToInt(transform.position.z) - MapGenerator.Instance.CheckpointZPosition;
+        GameManager.Instance.End(score);
     }
 
     private void DisableInputMovement()

@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField] int scorePerScaleUnit;
     [SerializeField] float scoreBurnedPerSecond;
-    int score = 0;
+    int score = 1;
 
     void Start()
     {
@@ -20,23 +20,19 @@ public class ScoreManager : MonoBehaviour
 
     void SetScore(int value)
     {
-        score = Mathf.Clamp(value, 0, int.MaxValue);
+        score = Mathf.Clamp(value, 1, int.MaxValue);
         ScalePlayer();
     }
 
-    void ScalePlayer()
+    void ScalePlayer() // CHECK SCALING -> CHANGE COLOR INSTEAD?
     {
-        if (score == 0) transform.localScale = Vector3.one;
-        else
-        {
-            float scale = 1 + (score / scorePerScaleUnit);
-            transform.localScale = Vector3.one * scale;
-        }
+        //float scale = 1 + (score / scorePerScaleUnit);
+        //transform.localScale = Vector3.one * scale;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             var obstacle = other.gameObject.GetComponent<Obstacle>();
             int newScore = obstacle.GetResult(score);

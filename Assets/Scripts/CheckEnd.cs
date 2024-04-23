@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class CheckEnd : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CheckPoint"))
+        if (other.gameObject.CompareTag("Player"))
         {
             if(other.TryGetComponent(out PlayerMovement playerMovement))
             {
