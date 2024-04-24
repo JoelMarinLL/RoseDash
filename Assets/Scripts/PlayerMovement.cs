@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     void Update() // ¡CAN MOVE PAST WALLS!
     {
         getInput();
-        if (!hasEnded) _rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
+        if (!hasEnded) _rb.velocity = new Vector3(movement * _speed, 0, _speed);//_rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
     }
 
     void getInput()

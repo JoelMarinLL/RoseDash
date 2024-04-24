@@ -17,7 +17,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] int _checkPointAt;
 
     [Header("Obstacles")]
-    [SerializeField][Range(0f, 1f)] float rewardRatio;
+    [SerializeField] [Range(0f, 1f)] float rewardRatio;
     [SerializeField] int startingClearedCells;
     [SerializeField] int minObstacleCountTotal;
     [SerializeField] int maxObstacleCountTotal;
@@ -43,7 +43,8 @@ public class MapGenerator : MonoBehaviour
             PlaceObstacles(z + 1);
             for (int x = 0; x < _width; x++)
             {
-                if (x == 0)
+                /*
+                if (x == 0) //Spawn GameObjects para bloquear el borde izquierdo
                 {
                     GameObject newObject = new GameObject();
                     BoxCollider box = newObject.AddComponent<BoxCollider>();
@@ -51,7 +52,7 @@ public class MapGenerator : MonoBehaviour
                     Instantiate(newObject, new Vector3(0, 1, 1 + z), Quaternion.identity);
                     Destroy(newObject);
                 }
-                else if (x + 1 >= _width)
+                else if (x + 1 >= _width) //Spawn GameObjects para bloquear el borde izquierdo
                 {
                     GameObject newObject = new GameObject();
                     BoxCollider box = newObject.AddComponent<BoxCollider>();
@@ -59,6 +60,7 @@ public class MapGenerator : MonoBehaviour
                     Instantiate(newObject, new Vector3(x + 2, 1, 1 + z), Quaternion.identity);
                     Destroy(newObject);
                 }
+                */
                 Vector3 pos = new Vector3(_floorPrefab.GetComponent<BoxCollider>().size.x + x,
                     0,
                     _floorPrefab.GetComponent<BoxCollider>().size.z + z);
@@ -66,9 +68,9 @@ public class MapGenerator : MonoBehaviour
                 if (z + 1 == _checkPointAt && x == _width - 1)
                 {
                     GameObject CheckPointGameObject = new GameObject();
-                    BoxCollider box = CheckPointGameObject.AddComponent<BoxCollider>();
-                    box.size = new Vector3(_width + 1, 1, 1);
-                    box.isTrigger = true;
+                    BoxCollider box1 = CheckPointGameObject.AddComponent<BoxCollider>();
+                    box1.size = new Vector3(_width + 1, 1, 1);
+                    box1.isTrigger = true;
                     CheckPointGameObject.tag = "CheckPoint";
                     CheckPointGameObject.name = "CheckPointGameObject";
                     CheckPointGameObject.AddComponent<CheckEnd>();
@@ -80,15 +82,22 @@ public class MapGenerator : MonoBehaviour
 
                     Instantiate(CheckPointGameObject, new Vector3(xPos, 1, 1 + z), Quaternion.identity);
                     Destroy(CheckPointGameObject);
+
                 }
+
             }
         }
+        GameObject newObject = new GameObject();
+        BoxCollider box = newObject.AddComponent<BoxCollider>();
+        box.size = new Vector3(1, 2, _lenght);
+        Instantiate(newObject, new Vector3(0, 1, _lenght / 2), Quaternion.identity);
+        Instantiate(newObject, new Vector3(_width + 1, 1, _lenght / 2), Quaternion.identity);
     }
 
     void GetObstaclePositions()
     {
         int obstacleNum = Random.Range(minObstacleCountTotal, maxObstacleCountTotal + 1);
-        
+
         obstaclePositions = new float[obstacleNum];
         for (int i = 0; i < obstacleNum; i++)
         {
@@ -106,7 +115,7 @@ public class MapGenerator : MonoBehaviour
                 if (zPos != null) hasNeighbours = obstaclePositions.Contains(zPos.Value + 1) || obstaclePositions.Contains(zPos.Value - 1);
                 else hasNeighbours = false;
             } while (hasNeighbours);
-            
+
             if (zPos != null) obstaclePositions[i] = zPos.Value;
         }
     }
