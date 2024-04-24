@@ -22,6 +22,7 @@ public class ScoreManager : MonoBehaviour
     {
         score = Mathf.Clamp(value, 1, int.MaxValue);
         ScalePlayer();
+        GameManager.Instance.setScore(score);
     }
 
     void ScalePlayer() // CHECK SCALING -> CHANGE COLOR INSTEAD?

@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FinalRun()
     {
-
         yield return new WaitForSecondsRealtime(GetComponent<ScoreManager>().GetRunningSeconds());
         hasEnded = true;
         int score = Mathf.RoundToInt(transform.position.z) - MapGenerator.Instance.CheckpointZPosition;
