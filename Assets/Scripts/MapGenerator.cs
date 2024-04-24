@@ -9,8 +9,6 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] GameObject _floorPrefab;
-    [Tooltip("How many blocks width the map will be")]
-    [SerializeField] int _width;
     [Tooltip("How many blocks lenght the map will be")]
     [SerializeField] int _lenght;
 
@@ -19,14 +17,15 @@ public class MapGenerator : MonoBehaviour
     [Header("Obstacles")]
     [SerializeField][Range(0f, 1f)] float rewardRatio;
     [SerializeField] int startingClearedCells;
+    [SerializeField] int minObstacleSpacing;
     [SerializeField] int minObstacleCountTotal;
     [SerializeField] int maxObstacleCountTotal;
-    [SerializeField] int minObstacleCountPerCell;
-    [SerializeField] int maxObstacleCountPerCell;
     [SerializeField] List<GameObject> obstaclePrefabs;
     [SerializeField] List<GameObject> rewardPrefabs;
 
     public int CheckpointZPosition { get => _checkPointAt + 1; }
+
+    int _width = 4;
 
     float[] obstaclePositions; // positions on the z axis of all obstacles
 
@@ -103,7 +102,7 @@ public class MapGenerator : MonoBehaviour
                 if (attempts < maxAttempts) zPos = Random.Range(start, _checkPointAt + 1);
                 else zPos = null;
 
-                if (zPos != null) hasNeighbours = obstaclePositions.Contains(zPos.Value + 1) || obstaclePositions.Contains(zPos.Value - 1);
+                if (zPos != null) hasNeighbours = ObstacleHasNeighbours(zPos.Value);
                 else hasNeighbours = false;
             } while (hasNeighbours);
             
@@ -111,17 +110,25 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    bool ObstacleHasNeighbours(int value)
+    {
+        if (obstaclePositions.Contains(value)) return true;
+        for (int i = 1; i <= minObstacleSpacing; i++)
+            if (obstaclePositions.Contains(value + i) || obstaclePositions.Contains(value - i)) 
+                return true;
+
+        return false;
+    }
+
     void PlaceObstacles(float z)
     {
         if (!obstaclePositions.Contains(z)) return;
-        int obstacleCountInCell = Random.Range(minObstacleCountPerCell, maxObstacleCountPerCell + 1);
-        obstacleCountInCell = Mathf.Clamp(obstacleCountInCell, 0, _width);
-        for (int i = 1; i <= obstacleCountInCell; i++)
-        {
-            int x = _width / obstacleCountInCell * i;
-            var position = new Vector3(x, 1, z);
-            Instantiate(GetRandomObstacle(), position, Quaternion.identity);
-        }
+        float xL = (_width / 2) - 0.5f;
+        float xR = _width - 0.5f;
+        var positionL = new Vector3(xL, 1, z);
+        var positionR = new Vector3(xR, 1, z);
+        Instantiate(GetRandomObstacle(), positionL, Quaternion.identity);
+        Instantiate(GetRandomObstacle(), positionR, Quaternion.identity);
     }
 
     GameObject GetRandomObstacle()
