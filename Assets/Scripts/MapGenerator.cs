@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] GameObject _floorPrefab;
+    [SerializeField] GameObject CheckPointGameObject;
     [Tooltip("How many blocks width the map will be")]
     [SerializeField] int _width;
     [Tooltip("How many blocks lenght the map will be")]
@@ -67,20 +68,21 @@ public class MapGenerator : MonoBehaviour
                 Instantiate(_floorPrefab, pos, Quaternion.identity);
                 if (z + 1 == _checkPointAt && x == _width - 1)
                 {
-                    GameObject CheckPointGameObject = new GameObject();
-                    BoxCollider box1 = CheckPointGameObject.AddComponent<BoxCollider>();
-                    box1.size = new Vector3(_width + 1, 1, 1);
-                    box1.isTrigger = true;
-                    CheckPointGameObject.tag = "CheckPoint";
-                    CheckPointGameObject.name = "CheckPointGameObject";
-                    CheckPointGameObject.AddComponent<CheckEnd>();
+                    //GameObject CheckPointGameObject = new GameObject();
+                    //BoxCollider box1 = CheckPointGameObject.AddComponent<BoxCollider>();
+                    //box1.size = new Vector3(_width + 1, 1, 1);
+                    //box1.isTrigger = true;
+                    //CheckPointGameObject.tag = "CheckPoint";
+                    //CheckPointGameObject.name = "CheckPointGameObject";
+                    //CheckPointGameObject.AddComponent<CheckEnd>();
                     float xPos = x + 1.5f - (_width / 2);
                     if (_width % 2 != 0)
                     {
                         xPos -= 0.5f;
                     }
 
-                    Instantiate(CheckPointGameObject, new Vector3(xPos, 1, 1 + z), Quaternion.identity);
+                    var go = Instantiate(CheckPointGameObject, new Vector3(xPos, 1, 1 + z), Quaternion.identity);
+                    //go.transform.localScale = _width;
                     Destroy(CheckPointGameObject);
 
                 }
