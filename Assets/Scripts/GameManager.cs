@@ -11,23 +11,34 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text scoreTextIngame;
+    [SerializeField] TMP_Text restartTimeText;
+    [SerializeField] int secondsToRestart;
 
     void Awake() => Instance = this;
 
     public void End(int score)
     {
         scoreText.text = $"SCORE{Environment.NewLine}{score}m";
-        StartCoroutine(RestartRoutine());
         scoreTextIngame.gameObject.SetActive(false);
+        StartCoroutine(RestartRoutine());
     }
 
     IEnumerator RestartRoutine()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        int counter = secondsToRestart;
+        while (counter > 0)
+        {
+            restartTimeText.text = $"Time to restart:{Environment.NewLine}{counter}";
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
         SceneManager.LoadScene(0);
     }
+
     public void setScore(int score)
     {
-        scoreTextIngame.text  = $"SCORE{Environment.NewLine}{score}m";
+        scoreTextIngame.text  = $"SCORE{Environment.NewLine}{score}";
     }
+
+
 }

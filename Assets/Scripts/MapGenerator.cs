@@ -82,9 +82,8 @@ public class MapGenerator : MonoBehaviour
                     }
 
                     var go = Instantiate(CheckPointGameObject, new Vector3(xPos, 1, 1 + z), Quaternion.identity);
-                    //go.transform.localScale = _width;
-                    Destroy(CheckPointGameObject);
-
+                    float scale = _width-1;
+                    go.transform.localScale = new Vector3(scale, scale, scale);
                 }
 
             }
@@ -111,7 +110,7 @@ public class MapGenerator : MonoBehaviour
             do
             {
                 attempts++;
-                if (attempts < maxAttempts) zPos = Random.Range(start, _checkPointAt + 1);
+                if (attempts < maxAttempts) zPos = Random.Range(start, _checkPointAt-1);
                 else zPos = null;
 
                 if (zPos != null) hasNeighbours = obstaclePositions.Contains(zPos.Value + 1) || obstaclePositions.Contains(zPos.Value - 1);

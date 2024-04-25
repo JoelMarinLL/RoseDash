@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         getInput();
         if (!hasEnded) _rb.velocity = new Vector3(movement * _speed, 0, _speed);//_rb.MovePosition(new Vector3(_rb.position.x + movement * _speed, _rb.position.y, _rb.position.z + _speed));
+        else _rb.velocity = Vector3.zero;
     }
 
     void getInput()

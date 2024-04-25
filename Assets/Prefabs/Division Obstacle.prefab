@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c5c1b10ea29764fb91bf18e3afff1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  operatorType: 0
+  operatorType: 3
   value: 1
   randomValue: 1
   randomMinValue: 2
