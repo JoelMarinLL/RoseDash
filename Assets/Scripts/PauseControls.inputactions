@@ -1,0 +1,54 @@
+{
+    "name": "PauseControls",
+    "maps": [
+        {
+            "name": "Pause",
+            "id": "72bd905f-aa19-4583-a816-83ba37e8962a",
+            "actions": [
+                {
+                    "name": "Pause_Esc",
+                    "type": "Button",
+                    "id": "27bf45c6-d21f-4fd2-b1e6-196060a203b1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause_P",
+                    "type": "Button",
+                    "id": "f0db702a-8a8c-4f34-a30e-89a93c8640a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1315ca10-4df1-4090-aa19-9f56d23605d7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause_Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc637008-04d3-40ad-9054-18d2f7e2281b",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause_P",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
