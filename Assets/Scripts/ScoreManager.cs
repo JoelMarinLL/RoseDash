@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField] int scorePerScaleUnit;
     [SerializeField] float scoreBurnedPerSecond;
-    int score = 1;
+    public int score = 1;
 
     void Start()
     {

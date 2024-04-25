@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     public void End(int score)
     {
         scoreText.text = $"SCORE{Environment.NewLine}{score}m";
-        scoreTextIngame.gameObject.SetActive(false);
         StartCoroutine(RestartRoutine());
     }
 
@@ -40,5 +39,19 @@ public class GameManager : MonoBehaviour
         scoreTextIngame.text  = $"SCORE{Environment.NewLine}{score}";
     }
 
+    public void CheckpointReached(int score, float seconds)
+    {
+        StartCoroutine(LowerScore(score, seconds));
+    }
 
+    IEnumerator LowerScore(int score, float seconds)
+    {
+        float timePerScore = seconds / score;
+        while (score > 0)
+        {
+            yield return new WaitForSeconds(timePerScore);
+            score--;
+            setScore(score);
+        }
+    }
 }

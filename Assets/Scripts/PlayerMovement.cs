@@ -38,10 +38,14 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FinalRun()
     {
-        yield return new WaitForSecondsRealtime(GetComponent<ScoreManager>().GetRunningSeconds());
+        var scoreManager = gameObject.GetComponent<ScoreManager>();
+        float seconds = scoreManager.GetRunningSeconds();
+        int score = scoreManager.score;
+        GameManager.Instance.CheckpointReached(score, seconds);
+        yield return new WaitForSecondsRealtime(seconds);
         hasEnded = true;
-        int score = Mathf.RoundToInt(transform.position.z) - MapGenerator.Instance.CheckpointZPosition;
-        GameManager.Instance.End(score);
+        int finalScore = Mathf.RoundToInt(transform.position.z) - MapGenerator.Instance.CheckpointZPosition;
+        GameManager.Instance.End(finalScore);
     }
 
     private void DisableInputMovement()
